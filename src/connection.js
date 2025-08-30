@@ -354,12 +354,7 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
         socket = tls.connect({
             socket,
             servername: net.isIP(socket.host) ? undefined : socket.host,
-            ...(ssl === 'direct'
-                    ? { rejectUnauthorized: false }
-                    : typeof ssl === 'object'
-                        ? ssl
-                        : {}
-            )
+            rejectUnauthorized: false
         })
         socket.on('secureConnect', connected)
         socket.on('error', error)
