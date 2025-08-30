@@ -336,7 +336,11 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
     if (options.socket)
       return ssl ? secure() : connected()
 
-    socket.on('connect', ssl === 'direct' ? directTLS : ssl ? secure : connected)
+    if (ssl === 'direct') {
+      socket.on('connect', directTLS)
+    } else {
+      socket.on('connect', ssl ? secure : connected)
+    }
 
     if (options.path)
       return socket.connect(options.path)
