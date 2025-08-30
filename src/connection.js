@@ -358,6 +358,7 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
         socket = tls.connect({
             socket,
             servername: net.isIP(socket.host) ? undefined : socket.host,
+            ALPNProtocols: ['postgresql'],
             rejectUnauthorized: false
         })
         socket.on('secureConnect', connected)
